@@ -1,10 +1,56 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <meta charset="UTF-8">
+        <meta charset="UTF-8" />
         <title>HelloTypeScript</title>
+        <script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
+        <script
+            crossorigin
+            src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"
+        ></script>
+        <script src="https://cdn.bootcdn.net/ajax/libs/babel-standalone/7.0.0-beta.3/babel.min.js"></script>
     </head>
     <body>
-        <script src="./js/index.js"></script>
+        <div id="example"></div>
+        <!-- <script src="./js/index.js"></script> -->
     </body>
+    <script type="text/babel">
+        console.log(document.getElementById('example'));
+        const input = React.createElement(() => {
+            const { useEffect, useRef, useState } = window.React;
+
+            const [state, upState] = useState({ value: '默认' });
+
+            const handleChange = (e) => {
+                console.log(e.target.value);
+                upState({ value:e.target.value });
+            };
+            return (
+                <div>
+                    输入框的值： {state.value}
+                    <br/>
+                    输入框：
+                    <input type="text" onChange={handleChange} />
+                </div>
+            );
+        });
+        const compsButton = React.createElement(() => {
+            const { useEffect, useRef, useState } = window.React;
+
+            const [state, upState] = useState({ num: 1 });
+
+            const fun = {
+                update() {
+                    state.num++;
+                    upState({ ...state });
+                },
+            };
+            useEffect(() => {
+                console.log(123);
+            }, []);
+            return <button onClick={fun.update}>{state.num}</button>;
+        });
+
+        ReactDOM.render(input, document.getElementById('example'));
+    </script>
 </html>
